@@ -1,0 +1,61 @@
+<html>
+
+<head>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="getLocation()">Obtener mi ubicación</button>
+    <p id="coords"></p>
+    <div id="map"></div>
+
+    <script>
+        var x = document.getElementById("coords");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Este navegador no soporta geolocación";
+            }
+        }
+
+        function showPosition(position) {
+            var lati = position.coords.latitude;
+            var longi = position.coords.longitude;
+            x.innerHTML = "Latitud: " + lati +
+                "<br>Longitud: " + longi;
+                initMap(lati,longi)
+        }
+
+        function initMap(lati , longi) {
+            var uluru = { lat: Number(lati), lng: Number(longi) };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: uluru
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuVLRssPCcrOn2DszyeBVnul0hldOqKrw&callback=initMap">
+    </script>
+
+
+</body>
+
+
+</html>
