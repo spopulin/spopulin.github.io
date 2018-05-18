@@ -1,15 +1,17 @@
 <html>
+
 <head>
+
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
         }
-        
+
         button {
             width: 100%;
         }
 
-        .container{
+        .container {
             text-align: center;
         }
 
@@ -31,13 +33,42 @@
         <br>
         <p id="coords"></p>
         <br>
-        
+        <br>
+        <h3>Linea Recta:</h3>
+        <p> Distancia a Patio Olmos:
+            <span id="olmos"></span>
+        </p>
+        <p> Distancia a Nuevocentro Shopping:
+            <span id="nuevocentro"></span>
+        </p>
+        <p> Distancia a Estadio Kempes:
+            <span id="kempes"></span>
+        </p>
+        <!--
+        <h3>Ruta mas corta:</h3>
+        <p> Distancia a Patio Olmos:
+            <span id="olmos2"></span>
+        </p>
+        <p> Distancia a Nuevocentro Shopping:
+            <span id="nuevocentro2"></span>
+        </p>
+        <p> Distancia a Estadio Kempes:
+            <span id="kempes2"></span>
+        </p>
+        -->
     </div>
     <div id="map"></div>
 
 
     <script>
         var x = document.getElementById("coords");
+        var po = document.getElementById("olmos");
+        var nc = document.getElementById("nuevocentro");
+        var kps = document.getElementById("kempes");
+
+        var po2 = document.getElementById("olmos2");
+        var nc2 = document.getElementById("nuevocentro2");
+        var kps2 = document.getElementById("kempes2");
 
         function getLocation() {
             if (navigator.geolocation) {
@@ -48,15 +79,18 @@
         }
 
         function showPosition(position) {
-            var lati = position.coords.latitude;
-            var longi = position.coords.longitude;
+
+            var lati = Number(position.coords.latitude);
+            var longi = Number(position.coords.longitude);
+
             x.innerHTML = "Latitud: " + lati +
                 "<br>Longitud: " + longi;
-            initMap(lati, longi)
+            initMap(lati, longi);
+            this.calculateDistances(lati,longi);
         }
 
         function initMap(lati, longi) {
-            var uluru = { lat: Number(lati), lng: Number(longi) };
+            var uluru = { lat: lati, lng: longi };
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
                 center: uluru
@@ -66,8 +100,28 @@
                 map: map
             });
         }
+
+        function calculateDistances(lati, longi) {
+
+            var here = new google.maps.LatLng(lati, longi);
+            var patioOlmos = new google.maps.LatLng(-31.4198972, -64.1904163);
+            var nuevoCentro = new google.maps.LatLng(-31.412538, -64.2062937);
+            var kempes = new google.maps.LatLng(-31.3688596, -64.2483017);
+
+
+            po.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, patioOlmos)/1000).toFixed(1) + " km";
+            nc.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, nuevoCentro)/1000).toFixed(1) + " km";
+            kps.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, kempes)/1000).toFixed(1) + " km";
+            
+            /*
+            var kempesArr = [here, kempes];
+            po2.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, patioOlmos)/1000).toFixed(1) + " km";
+            nc2.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, nuevoCentro)/1000).toFixed(1) + " km";
+            kps2.innerHTML = (google.maps.geometry.spherical.computeLength(kempesArr)/1000).toFixed(1) + " km"; */
+        }
+
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuVLRssPCcrOn2DszyeBVnul0hldOqKrw&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuVLRssPCcrOn2DszyeBVnul0hldOqKrw&libraries=geometry,places&callback=initMap">
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -75,5 +129,10 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
+
+
+
 </body>
+
+
 </html>
