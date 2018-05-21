@@ -45,7 +45,7 @@
             <span id="kempes"></span>
         </p>
         <!--
-        <h3>Ruta mas corta:</h3>
+        <h3>Ruta mas rápida:</h3>
         <p> Distancia a Patio Olmos:
             <span id="olmos2"></span>
         </p>
@@ -70,6 +70,8 @@
         var nc2 = document.getElementById("nuevocentro2");
         var kps2 = document.getElementById("kempes2");
 
+
+
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
@@ -86,18 +88,62 @@
             x.innerHTML = "Latitud: " + lati +
                 "<br>Longitud: " + longi;
             initMap(lati, longi);
-            this.calculateDistances(lati,longi);
+            this.calculateDistances(lati, longi);
         }
 
         function initMap(lati, longi) {
             var uluru = { lat: lati, lng: longi };
+            var patioOlmos = new google.maps.LatLng(-31.4198972, -64.1904163);
+            var nuevoCentro = new google.maps.LatLng(-31.412538, -64.2062937);
+            var kempes = new google.maps.LatLng(-31.3688596, -64.2483017);
+
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 15,
+                zoom: 12,
                 center: uluru
             });
             var marker = new google.maps.Marker({
                 position: uluru,
+                title: "Tu posición",
                 map: map
+            });
+
+            var markerNvoCentro = new google.maps.Marker({
+                position: nuevoCentro,
+                title: "Nuevocentro Shopping ",
+                map: map,
+                icon: "dot2.png"
+            });
+            var infoNvoCentro = new google.maps.InfoWindow({
+                content: "<h5>NuevoCentro</h5><p>Duarte Quirós 1400, X5000 Córdoba</p>"
+            });
+            markerNvoCentro.addListener('click', function () {
+                infoNvoCentro.open(map, markerNvoCentro);
+            });
+
+            var markerKempes = new google.maps.Marker({
+                position: kempes,
+                title: "Kempes ",
+                map: map,
+                icon: "dot2.png"
+            });
+            var infoKempes= new google.maps.InfoWindow({
+                content: "<h5>Kempes</h5><p>Av. Cárcano s/n, Chateau Carreras, Córdoba</p>"
+            });
+            markerKempes.addListener('click', function () {
+                infoNvoCentro.open(map, markerKempes);
+            });
+
+            var markerPatioOlmos = new google.maps.Marker({
+                position: patioOlmos,
+                title: "Patio Olmos",
+                map: map,
+                icon: "dot2.png"
+            });
+            var infoPatioOlmos= new google.maps.InfoWindow({
+                content: "<h5>Patio Olmos</h5><p>Av. Vélez Sarsfield 361, X5000JJD Córdoba</p>"
+            });
+            markerPatioOlmos.addListener('click', function () {
+                infoPatioOlmos.open(map, markerPatioOlmos);
             });
         }
 
@@ -108,17 +154,17 @@
             var nuevoCentro = new google.maps.LatLng(-31.412538, -64.2062937);
             var kempes = new google.maps.LatLng(-31.3688596, -64.2483017);
 
+            po.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, patioOlmos) / 1000).toFixed(1) + " km";
+            nc.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, nuevoCentro) / 1000).toFixed(1) + " km";
+            kps.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, kempes) / 1000).toFixed(1) + " km";
 
-            po.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, patioOlmos)/1000).toFixed(1) + " km";
-            nc.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, nuevoCentro)/1000).toFixed(1) + " km";
-            kps.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, kempes)/1000).toFixed(1) + " km";
-            
             /*
             var kempesArr = [here, kempes];
             po2.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, patioOlmos)/1000).toFixed(1) + " km";
             nc2.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(here, nuevoCentro)/1000).toFixed(1) + " km";
             kps2.innerHTML = (google.maps.geometry.spherical.computeLength(kempesArr)/1000).toFixed(1) + " km"; */
         }
+
 
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCuVLRssPCcrOn2DszyeBVnul0hldOqKrw&libraries=geometry,places&callback=initMap">
