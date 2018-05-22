@@ -2,6 +2,9 @@
 
 <head>
 
+    <title>Geolocation Test</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -114,7 +117,7 @@
                 icon: "dot2.png"
             });
             var infoNvoCentro = new google.maps.InfoWindow({
-                content: "<h5>NuevoCentro</h5><p>Duarte Quirós 1400, X5000 Córdoba</p>"
+                content: "<h5>NuevoCentro</h5><p>Duarte Quirós 1400, X5000 Córdoba</p><br><a target='_blank' href='https://www.google.com.ar/maps/dir/"+ lati +"," + longi +"/Nuevocentro+Shopping/@-31.4139956,-64.2046241,16.71z/data=!4m9!4m8!1m0!1m5!1m1!1s0x943298830933ad09:0xb72fd713f4c77c4e!2m2!1d-64.204105!2d-31.4125426!3e0'>Como llegar Aquí (Google Maps)</a>"
             });
             markerNvoCentro.addListener('click', function () {
                 infoNvoCentro.open(map, markerNvoCentro);
@@ -127,10 +130,10 @@
                 icon: "dot2.png"
             });
             var infoKempes= new google.maps.InfoWindow({
-                content: "<h5>Kempes</h5><p>Av. Cárcano s/n, Chateau Carreras, Córdoba</p>"
+                content: "<h5>Kempes</h5><p>Av. Cárcano s/n, Chateau Carreras, Córdoba</p><br><a href='https://www.google.com.ar/maps/dir/"+ lati +"," + longi +"/Estadio+Mario+Alberto+Kempes,+C%C3%B3rdoba,+Cordoba/@-31.4156431,-64.3085356,12z/data=!3m1!4b1!4m9!4m8!1m0!1m5!1m1!1s0x94329ecc4516ee49:0x52b97a2b4d3699bf!2m2!1d-64.246113!2d-31.3688642!3e0'>Como llegar Aquí (Google Maps)</a>"
             });
             markerKempes.addListener('click', function () {
-                infoNvoCentro.open(map, markerKempes);
+                infoKempes.open(map, markerKempes);
             });
 
             var markerPatioOlmos = new google.maps.Marker({
@@ -140,7 +143,7 @@
                 icon: "dot2.png"
             });
             var infoPatioOlmos= new google.maps.InfoWindow({
-                content: "<h5>Patio Olmos</h5><p>Av. Vélez Sarsfield 361, X5000JJD Córdoba</p>"
+                content: "<h5>Patio Olmos</h5><p>Av. Vélez Sarsfield 361, X5000JJD Córdoba</p><br><a target='_blank' href='https://www.google.com.ar/maps/dir/"+ lati +"," + longi +"/Patio+Olmos+Shopping/data=!3m1!4b1!4m9!4m8!1m0!1m5!1m1!1s0x9432a28418046d25:0xd3553a5772e0e0ed!2m2!1d-64.1882276!2d-31.4199018!3e0'>Como llegar Aquí (Google Maps)</a>"
             });
             markerPatioOlmos.addListener('click', function () {
                 infoPatioOlmos.open(map, markerPatioOlmos);
